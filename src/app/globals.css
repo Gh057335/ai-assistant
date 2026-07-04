@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* Registered so a change to --accent tweens (color-interpolates) instead of
+   snapping — lets the whole UI's accent morph smoothly on model switch. */
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d97757;
+}
+
+/* Dark-theme design tokens. `--accent` is overridden per active model by
+   ThemeProvider; everything else is the static neutral scale. */
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-hover: #1c1c1c;
+  --bg-composer: #171717;
+  --bg-user-bubble: #262626;
+  --border: #262626;
+  --text-primary: #f4f4f4;
+  --text-secondary: #8a8a8a;
+  --text-muted: #565656;
+  --accent: #d97757;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+@utility scrollbar-hidden {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Tool Picker Menu open animation: fade-in + slide-up, 100ms. Pure CSS (no
+   motion lib) so the menu stays dependency-free; the reduced-motion block below
+   collapses it to instant. */
+@utility tool-picker-enter {
+  animation: tool-picker-enter 100ms ease-out;
+}
+
+@keyframes tool-picker-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
